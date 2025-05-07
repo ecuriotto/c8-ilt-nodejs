@@ -34,4 +34,65 @@ async function creditCardChargingWorker(zeebe) {
   });
 }
 
-module.exports = {creditDeductionWorker, creditCardChargingWorker};
+const crypto = require('crypto');
+
+async function sendMessageWorker(zeebe) {
+  console.log(`Creating workers to send messages...`);
+
+  // Worker for "payment-invocation"
+  zeebe.createWorker({
+    taskType: 'payment-invocation',
+    taskHandler: async (job) => {
+      console.log(`Task definition type: ${job.type}`);
+
+      const variables = job.variables;
+      const orderId = generateRandomOrderId(6);
+      variables.orderId = orderId;
+
+      // Publish message
+      await zeebe.publishMessage({
+        name: 'paymentRequestMessage',
+        correlationKey: orderId,
+        variables,
+      });
+
+      // Complete the job
+      await job.complete(variables);
+    },
+  });
+
+  // Worker for "payment-completion"
+  zeebe.createWorker({
+    taskType: 'payment-completion',
+    taskHandler: async (job) => {
+      console.log(`Task definition type: ${job.type}`);
+
+      const variables = job.variables;
+      const orderId = variables.orderId;
+
+      try {
+        await zeebe.publishMessage({
+          name: 'paymentCompletedMessage',
+          correlationKey: orderId,
+        });
+
+        await job.complete();
+      } catch (error) {
+        console.error('Could not complete job', error);
+        throw error;
+      }
+    },
+  });
+}
+
+// Utility function to generate a random order ID (letters and digits)
+function generateRandomOrderId(length) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(crypto.randomInt(0, chars.length));
+  }
+  return result;
+}
+
+module.exports = {creditDeductionWorker, creditCardChargingWorker, sendMessageWorker};

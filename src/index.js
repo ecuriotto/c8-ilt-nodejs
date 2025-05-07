@@ -1,5 +1,5 @@
 const { Camunda8 } = require('@camunda8/sdk');
-const { creditDeductionWorker, creditCardChargingWorker } = require('./workers/workers.js');
+const { creditDeductionWorker, creditCardChargingWorker, sendMessageWorker } = require('./workers/workers.js');
 const fs = require('fs');
 const path = require('path');
 const propertiesReader = require('properties-reader');
@@ -28,6 +28,7 @@ async function run() {
   // Add your workers here
   creditCardChargingWorker(zeebe);
   creditDeductionWorker(zeebe);
+  sendMessageWorker(zeebe);
 }
 
 run();
