@@ -1,4 +1,6 @@
 class CreditCardService {
+  constructor() {
+  }
   chargeAmount(cardNumber, cvc, expiryDate, amount) {
     console.log(
       `charging card ${cardNumber} that expires on ${expiryDate} and has cvc ${cvc} with amount of ${amount}`
@@ -7,4 +9,4 @@ class CreditCardService {
   }
 }
 
-module.exports = CreditCardService;
+module.exports = {CreditCardService};

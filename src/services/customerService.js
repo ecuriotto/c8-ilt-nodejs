@@ -1,7 +1,7 @@
 class CustomerService {
   constructor() {
     // The customer credit are the last digits of the customer id
-    this.pattern = /(.*?)(\d*)/;
+    this.pattern = /(\D*)(\d+)$/;
   }
 
   /**
@@ -44,4 +44,4 @@ class CustomerService {
   }
 }
 
-module.exports = CustomerService;
+module.exports = {CustomerService};
