@@ -1,0 +1,26 @@
+{
+  "name": "c8-platform-developers-lab-node",
+  "version": "1.0.0",
+  "description": "Contains the template for the ca058 exercises using the Node client",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camunda-academy/c8-platform-developers-lab-node.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "camunda-academy",
+  "bugs": {
+    "url": "https://github.com/camunda-academy/c8-platform-developers-lab-node/issues"
+  },
+  "homepage": "https://github.com/camunda-academy/c8-platform-developers-lab-node#readme",
+  "dependencies": {
+    "@camunda8/sdk": "^8.5.0",
+    "properties-reader": "^2.3.0"
+  }
+}
