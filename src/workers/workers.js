@@ -20,16 +20,22 @@ async function creditDeductionWorker(zeebe) {
 async function creditCardChargingWorker(zeebe) {
   console.log(`Creating creditCardChargingWorker...`);
   const creditCardService = new CreditCardService();
+
   zeebe.createWorker({
     taskType: 'credit-card-charging',
-    taskHandler: (job) => {
+    taskHandler: async (job) => {
       const { cardNumber, cvc, expiryDate, openAmount } = job.variables;
       console.log(`handling job of type ${job.type}`);
-      creditCardService.chargeAmount(cardNumber, cvc, expiryDate, openAmount);
 
-      return job.complete({
-        
-      });
+      try {
+        creditCardService.chargeAmount(cardNumber, cvc, expiryDate, openAmount);
+
+        return job.complete({});
+      } catch (err) {
+        console.error(`Failed to charge credit card: ${err.message}`);
+
+        await job.fail(err.message, 0);
+      }
     },
   });
 }
