@@ -1,5 +1,5 @@
 const { CustomerService } = require('../services/customerService');
-const { CreditCardService } = require('../services/creditCardService');
+const { CreditCardService, InvalidCreditCardException } = require('../services/CreditCardService');
 async function creditDeductionWorker(zeebe) {
   console.log(`Creating creditDeductionWorker...`);
   const customerService = new CustomerService();
@@ -25,16 +25,22 @@ async function creditCardChargingWorker(zeebe) {
     taskType: 'credit-card-charging',
     taskHandler: async (job) => {
       const { cardNumber, cvc, expiryDate, openAmount } = job.variables;
-      console.log(`handling job of type ${job.type}`);
+      console.log(`Handling job of type ${job.type}`);
 
       try {
         creditCardService.chargeAmount(cardNumber, cvc, expiryDate, openAmount);
-
-        return job.complete({});
+        await job.complete({});
       } catch (err) {
-        console.error(`Failed to charge credit card: ${err.message}`);
-
-        await job.fail(err.message, 0);
+        if (err instanceof InvalidCreditCardException) {
+          console.error(`Credit card error: ${err.message}`);
+          await job.error({
+            errorCode: 'creditCardChargeError',
+            errorMessage: err.message,
+          });
+        } else {
+          console.error(`Unexpected error occurred: ${err.message}`);
+          await job.fail(err.message, 0);
+        }
       }
     },
   });

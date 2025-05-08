@@ -1,11 +1,10 @@
 class CreditCardService {
-  constructor() {
-  }
+  constructor() {}
 
   chargeAmount(cardNumber, cvc, expiryDate, amount) {
     if (expiryDate.length !== 5) {
       console.error(`Invalid expiry date: ${expiryDate}`);
-      throw new Error('Expiry date must be in MM/YY format');
+      throw new InvalidCreditCardException('Expiry date must be in MM/YY format');
     }
 
     console.log(
@@ -15,4 +14,12 @@ class CreditCardService {
   }
 }
 
-module.exports = {CreditCardService};
+class InvalidCreditCardException extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'InvalidCreditCardException';
+  }
+}
+
+module.exports = { CreditCardService, InvalidCreditCardException };
+
