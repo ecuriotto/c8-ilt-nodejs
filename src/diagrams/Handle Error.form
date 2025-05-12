@@ -1,0 +1,73 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "ac16d31"
+  },
+  "schemaVersion": 16,
+  "id": "Form_0myqi1c",
+  "components": [
+    {
+      "text": "# There's an error!",
+      "label": "Text view",
+      "type": "text",
+      "layout": {
+        "row": "Row_030ucfx",
+        "columns": null
+      },
+      "id": "Field_0buhp1x"
+    },
+    {
+      "label": "Error message",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0lrdl9o",
+        "columns": null
+      },
+      "id": "Field_0xey9hu",
+      "key": "errorMessage"
+    },
+    {
+      "label": "Card number",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1vve62s",
+        "columns": null
+      },
+      "id": "Field_0a7i40r",
+      "key": "cardNumber"
+    },
+    {
+      "label": "expiryDate",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_1nagldp",
+        "columns": null
+      },
+      "id": "Field_18e8iy6",
+      "key": "expiryDate"
+    },
+    {
+      "label": "Open amount",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0skd52q",
+        "columns": null
+      },
+      "id": "Field_0za5czo",
+      "key": "openAmount"
+    },
+    {
+      "label": "Error resolved",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1pemzgd",
+        "columns": null
+      },
+      "id": "Field_00b7qod",
+      "key": "errorResolved"
+    }
+  ],
+  "type": "default"
+}
