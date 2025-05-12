@@ -15,4 +15,4 @@ class CreditCardService {
   }
 }
 
-module.exports = {CreditCardService};
+module.exports = CreditCardService;
