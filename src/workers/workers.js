@@ -1,5 +1,5 @@
-const { CustomerService } = require('../services/customerService');
-const { CreditCardService } = require('../services/creditCardService');
+const CustomerService = require('../services/customerService');
+const CreditCardService = require('../services/creditCardService');
 async function creditDeductionWorker(zeebe) {
   console.log(`Creating creditDeductionWorker...`);
   const customerService = new CustomerService();
