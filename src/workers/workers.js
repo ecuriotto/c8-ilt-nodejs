@@ -1,4 +1,4 @@
-const { CustomerService } = require('../services/customerService');
+const CustomerService = require('../services/customerService');
 const { CreditCardService, InvalidCreditCardException } = require('../services/CreditCardService');
 async function creditDeductionWorker(zeebe) {
   console.log(`Creating creditDeductionWorker...`);
